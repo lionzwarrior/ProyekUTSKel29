@@ -5,24 +5,20 @@ import org.joml.Vector4f;
 
 import java.util.List;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 
-public class Circle extends Object2d{
+public class SquareWithRumusCircle extends Object2d{
+    double rad;
     float x;
     float y;
-    double rad;
-
-    public Circle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, Vector3f centerpoint, double radius) {
+    public SquareWithRumusCircle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, Vector3f centerpoint, double radius) {
         super(shaderModuleDataList, vertices, color);
-        createCircle(centerpoint, radius);
+        this.createStar(centerpoint, radius);
         setupVAOVBO();
     }
 
-    public void createCircle(Vector3f centerpoint, double radius){
-        for(double i = 0.0f; i < 360; i += 0.01f){
+    public void createStar(Vector3f centerpoint, double radius){
+        for(double i = 45.0f; i < 360; i += 90.0f){
             rad = Math.toRadians(i);
             x = (float)(centerpoint.x + radius*Math.cos(rad));
             y = (float)(centerpoint.y + radius*Math.sin(rad));

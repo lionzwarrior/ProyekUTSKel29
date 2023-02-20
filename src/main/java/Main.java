@@ -16,6 +16,10 @@ public class Main {
     ArrayList<Object2d> objects = new ArrayList<>();
     ArrayList<Object2d> objectsRectangle = new ArrayList<>();
     ArrayList<Object2d> objectsCircle = new ArrayList<>();
+    ArrayList<Object2d> objectsEclipse = new ArrayList<>();
+    ArrayList<Object2d> objectsStar = new ArrayList<>();
+    ArrayList<Object2d> objectsSquare = new ArrayList<>();
+    ArrayList<Object2d> objectsTriangle = new ArrayList<>();
 
     public void run() {
 
@@ -56,8 +60,8 @@ public class Main {
                 ),
                 new ArrayList<>(
                         List.of(
-                                new Vector3f(-0.82f, -0.3f, 0.0f),
-                                new Vector3f(0.82f, -0.3f, 0.0f),
+                                new Vector3f(-0.81f, -0.3f, 0.0f),
+                                new Vector3f(0.81f, -0.3f, 0.0f),
                                 new Vector3f(-0.5f, 0.15f, 0.0f),
                                 new Vector3f(0.5f, 0.15f, 0.0f)
                         )
@@ -141,6 +145,94 @@ public class Main {
                 0.1
         ));
 
+        objectsEclipse.add(new Eclipse(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
+                new Vector4f(0.37f, 0.37f, 0.37f, 1.0f),
+                new Vector3f(0.35f, 0.42f, 0.0f),
+                0.05, 0.07
+        ));
+
+        objectsEclipse.add(new Eclipse(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
+                new Vector4f(0.37f, 0.37f, 0.37f, 1.0f),
+                new Vector3f(0.4f, 0.47f, 0.0f),
+                0.05, 0.09
+        ));
+
+        objectsEclipse.add(new Eclipse(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
+                new Vector4f(0.37f, 0.37f, 0.37f, 1.0f),
+                new Vector3f(0.5f, 0.52f, 0.0f),
+                0.05, 0.14
+        ));
+
+        objectsStar.add(new Star(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
+                new Vector4f(1.0f, 1.0f, 0.0f, 1.0f),
+                new Vector3f(0.0f, 0.75f, 0.0f),
+                0.02
+        ));
+
+        objectsStar.add(new Star(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
+                new Vector4f(1.0f, 1.0f, 0.0f, 1.0f),
+                new Vector3f(0.8f, 0.7f, 0.0f),
+                0.04
+        ));
+
+        objectsStar.add(new Star(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
+                new Vector4f(1.0f, 1.0f, 0.0f, 1.0f),
+                new Vector3f(-0.4f, 0.5f, 0.0f),
+                0.04
+        ));
+
+//        objectsSquare.add(new SquareWithRumusCircle(
+//                Arrays.asList(
+//                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+//                        new ShaderProgram.ShaderModuleData("resourinces/shaders/scene.frag", GL_FRAGMENT_SHADER)
+//                ),
+//                new ArrayList<>(),
+//                new Vector4f(1.0f, 1.0f, 1.0f, 1.0f),
+//                new Vector3f(0.0f, 0.0f, 0.0f),
+//                0.2
+//        ));
+
+//        objectsTriangle.add(new TriangleWithRumusCircle(
+//                Arrays.asList(
+//                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+//                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+//                ),
+//                new ArrayList<>(),
+//                new Vector4f(1.0f, 1.0f, 1.0f, 1.0f),
+//                new Vector3f(0.0f, 0.0f, 0.0f),
+//                0.2
+//        ));
+
 //        objects.add(new Object2d(
 //                Arrays.asList(
 //                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
@@ -194,6 +286,22 @@ public class Main {
             }
 
             for (Object2d object : objectsCircle) {
+                object.draw();
+            }
+
+            for (Object2d object : objectsEclipse) {
+                object.draw();
+            }
+
+            for (Object2d object : objectsStar) {
+                object.draw();
+            }
+
+            for (Object2d object : objectsSquare) {
+                object.draw();
+            }
+
+            for (Object2d object : objectsTriangle) {
                 object.draw();
             }
 
