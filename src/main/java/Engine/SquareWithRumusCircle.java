@@ -11,13 +11,17 @@ public class SquareWithRumusCircle extends Object2d{
     double rad;
     float x;
     float y;
+    public Vector3f centerpoint;
+    double radius;
     public SquareWithRumusCircle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, Vector3f centerpoint, double radius) {
         super(shaderModuleDataList, vertices, color);
-        this.createStar(centerpoint, radius);
+        this.createSquare(centerpoint, radius);
+        this.centerpoint = centerpoint;
+        this.radius = radius;
         setupVAOVBO();
     }
 
-    public void createStar(Vector3f centerpoint, double radius){
+    public void createSquare(Vector3f centerpoint, double radius){
         for(double i = 45.0f; i < 360; i += 90.0f){
             rad = Math.toRadians(i);
             x = (float)(centerpoint.x + radius*Math.cos(rad));
@@ -29,5 +33,12 @@ public class SquareWithRumusCircle extends Object2d{
     public void draw() {
         drawSetup();
         glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
+    }
+
+    public void updateCenterpoint(){
+        vertices.clear();
+        createSquare(centerpoint, radius);
+        setupVAOVBO();
+        draw();
     }
 }

@@ -3,6 +3,7 @@ package Engine;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL15.*;
@@ -12,14 +13,17 @@ import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class Object2d extends ShaderProgram {
-    List<Vector3f> vertices;
+    public List<Vector3f> vertices;
     int vao;
     int vbo;
-
     Vector4f color;
     UniformsMap uniformsMap;
     List<Vector3f> verticesColor;
     int vboColor;
+    List<Vector3f> curve = new ArrayList<>();
+    float x;
+    float y;
+
     public Object2d(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color) {
         super(shaderModuleDataList);
         this.vertices = vertices;
@@ -101,6 +105,28 @@ public class Object2d extends ShaderProgram {
         glDrawArrays(GL_TRIANGLES, 0, vertices.size());
     }
 
+    public void drawLine() {
+        drawSetup();
+        // Draw the vertices
+        glLineWidth(10);
+        glPointSize(10);
+        glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
+    }
+
+    public void drawLineForCurve() {
+        drawSetup();
+        // Draw the vertices
+        glLineWidth(1);
+        glPointSize(0);
+        glDrawArrays(GL_LINE_STRIP, 0, curve.size());
+    }
+
+    public void addVertices(Vector3f newVector) {
+        vertices.add(newVector);
+//        setupVAOVBO();
+        createCurve();
+    }
+
     public void drawWithVerticesColor() {
         drawSetupWithVerticesColor();
         // Draw the vertices
@@ -113,5 +139,52 @@ public class Object2d extends ShaderProgram {
         // GL_POINTS
         // GL_TRIANGLE_FAN
         glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+    }
+
+    public void setupVAOVBOForCurve() {
+        // set vao
+        vao = glGenVertexArrays();
+        glBindVertexArray(vao);
+
+        // set vbo
+        vbo = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        // mengirim vertices ke shader
+        glBufferData(GL_ARRAY_BUFFER, Utils.listoFloat(curve), GL_STATIC_DRAW);
+    }
+
+    public void createCurve(){
+        curve.clear();
+        for(double i = 0; i <= 1.01; i += 0.01){
+            curve.add(bezierCurve(i));
+        }
+        setupVAOVBOForCurve();
+    }
+
+    private Vector3f bezierCurve(double t){
+        int i = 0;
+        int size = vertices.size() - 1;
+        Vector3f result = new Vector3f(0.0f, 0.0f, 0.0f);
+        for(Vector3f vertice : vertices){
+//            System.out.println(combinations(size, i));
+            result.x += combinations(size, i) * Math.pow((1-t), size - i) * vertice.x * Math.pow(t, i);
+//            System.out.println("(1-" + t + ")^" + (size-i) + " * " + vertice.x + " * " + t + "^" + i);
+            result.y += combinations(size, i) * Math.pow((1-t), size - i) * vertice.y * Math.pow(t, i);
+            i += 1;
+        }
+//        System.out.println(result.x + " " + result.y);
+        return result;
+    }
+
+    private int combinations(int n, int r){
+        return factorial(n) / factorial(r) / factorial(n - r);
+    }
+
+    private int factorial(int n){
+        int result = 1;
+        for(int i = 1; i <= n; i++){
+            result *= i;
+        }
+        return result;
     }
 }

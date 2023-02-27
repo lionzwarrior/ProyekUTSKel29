@@ -13,11 +13,11 @@ public class TriangleWithRumusCircle extends Object2d{
     float y;
     public TriangleWithRumusCircle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, Vector3f centerpoint, double radius) {
         super(shaderModuleDataList, vertices, color);
-        this.createStar(centerpoint, radius);
+        this.createTriangle(centerpoint, radius);
         setupVAOVBO();
     }
 
-    public void createStar(Vector3f centerpoint, double radius){
+    public void createTriangle(Vector3f centerpoint, double radius){
         for(double i = 90.0f; i < 360; i += 120.0f){
             rad = Math.toRadians(i);
             x = (float)(centerpoint.x + radius*Math.cos(rad));
