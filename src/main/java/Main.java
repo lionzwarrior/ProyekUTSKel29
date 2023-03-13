@@ -20,9 +20,10 @@ public class Main {
 //    ArrayList<Object2d> objectsCircle = new ArrayList<>();
 //    ArrayList<Object2d> objectsEclipse = new ArrayList<>();
 //    ArrayList<Object2d> objectsStar = new ArrayList<>();
-    ArrayList<SquareWithRumusCircle> objectsSquare = new ArrayList<>();
+//    ArrayList<SquareWithRumusCircle> objectsSquare = new ArrayList<>();
 //    ArrayList<Object2d> objectsTriangle = new ArrayList<>();
-    ArrayList<Object2d> objectsPointsControl = new ArrayList<>();
+//    ArrayList<Object2d> objectsPointsControl = new ArrayList<>();
+    ArrayList<Object2d> objectsSphere = new ArrayList<>();
 
     public void run() {
 
@@ -272,13 +273,49 @@ public class Main {
 //                )
 //        ));
 
-        objectsPointsControl.add(new Object2d(
+//        objectsPointsControl.add(new Object2d(
+//                Arrays.asList(
+//                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+//                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+//                ),
+//                new ArrayList<>(),
+//                new Vector4f(0.0f, 1.0f, 1.0f, 1.0f)
+//        ));
+//
+//        objectsPointsControl.add(new Object2d(
+//                Arrays.asList(
+//                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+//                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+//                ),
+//                new ArrayList<>(),
+//                new Vector4f(0.0f, 1.0f, 0.0f, 1.0f)
+//        ));
+
+//        objects.add(new Object2d(
+//                Arrays.asList(
+//                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+//                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+//                ),
+//                new ArrayList<>(
+//                        List.of(
+//                                new Vector3f(0.0f, 0.0f, 0.0f),
+//                                new Vector3f(0.0f, -0.5f, 0.0f),
+//                                new Vector3f(0.5f, -0.5f, 0.0f),
+//                                new Vector3f(0.0f, 0.5f, 0.0f)
+//                        )
+//                ),
+//                new Vector4f(0.0f, 0.0f, 1.0f, 1.0f)
+//        ));
+
+        objectsSphere.add(new Sphere(
                 Arrays.asList(
                         new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
                         new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
                 ),
                 new ArrayList<>(),
-                new Vector4f(0.0f, 1.0f, 1.0f, 1.0f)
+                new Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector3f(0.0f, 0.0f, 0.0f),
+                0.5, 0.5, 0.5f
         ));
     }
 
@@ -294,38 +331,48 @@ public class Main {
             pos.y = -(pos.y - (window.getHeight()) / 2.0f) / (window.getHeight() / 2.0f);
 //            System.out.println("x : " + pos.x+" y : "+pos.y);
             if ((!(pos.x > 1 || pos.x < -0.97) && !(pos.y > 0.97 || pos.y < -1))) {
-//                System.out.println("x : " + pos.x + " y : " + pos.y);
-                for (SquareWithRumusCircle object : objectsSquare){
-                    if (Math.sqrt(Math.pow(pos.x - object.centerpoint.x, 2) + Math.pow(pos.y - object.centerpoint.y, 2)) < 0.1){
-//                        System.out.println(Math.sqrt(Math.pow(pos.x - object.centerpoint.x, 2) + Math.pow(pos.y - object.centerpoint.y, 2)));
-                        object.centerpoint.x = pos.x;
-                        object.centerpoint.y = pos.y;
-                        object.updateCenterpoint();
-                        break;
-                    }
-                }
-                for (Vector3f point : objectsPointsControl.get(0).vertices){
-                    if (Math.sqrt(Math.pow(pos.x - point.x, 2) + Math.pow(pos.y - point.y, 2)) < 0.1){
-//                        System.out.println(Math.sqrt(Math.pow(pos.x - point.x, 2) + Math.pow(pos.y - point.y, 2)));
-                        point.x = pos.x;
-                        point.y = pos.y;
+                System.out.println("x : " + pos.x + " y : " + pos.y);
+//                for (SquareWithRumusCircle object : objectsSquare){
+//                    if (Math.sqrt(Math.pow(pos.x - object.centerpoint.x, 2) + Math.pow(pos.y - object.centerpoint.y, 2)) < 0.1){
+////                        System.out.println(Math.sqrt(Math.pow(pos.x - object.centerpoint.x, 2) + Math.pow(pos.y - object.centerpoint.y, 2)));
+//                        object.centerpoint.x = pos.x;
+//                        object.centerpoint.y = pos.y;
+//                        object.updateCenterpoint();
+//                        break;
+//                    }
+//                }
+//                for (Vector3f point : objectsPointsControl.get(0).vertices){
+//                    if (Math.sqrt(Math.pow(pos.x - point.x, 2) + Math.pow(pos.y - point.y, 2)) < 0.1){
+////                        System.out.println(Math.sqrt(Math.pow(pos.x - point.x, 2) + Math.pow(pos.y - point.y, 2)));
+//                        point.x = pos.x;
+//                        point.y = pos.y;
 //                        objectsPointsControl.get(0).setupVAOVBO();
-                        objectsPointsControl.get(0).createCurve();
-                        objectsPointsControl.get(0).drawLineForCurve();
-                        return;
-                    }
-                }
-                objectsPointsControl.get(0).addVertices(new Vector3f(pos.x, pos.y, 0));
-                objectsSquare.add(new SquareWithRumusCircle(
-                        Arrays.asList(
-                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
-                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
-                        ),
-                        new ArrayList<>(),
-                        new Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
-                        new Vector3f(pos.x, pos.y, 0.0f),
-                        0.1
-                ));
+//                        objectsPointsControl.get(0).drawLine();
+//                        break;
+//                    }
+//                }
+//                for (Vector3f point : objectsPointsControl.get(1).vertices){
+//                    if (Math.sqrt(Math.pow(pos.x - point.x, 2) + Math.pow(pos.y - point.y, 2)) < 0.1){
+////                        System.out.println(Math.sqrt(Math.pow(pos.x - point.x, 2) + Math.pow(pos.y - point.y, 2)));
+//                        point.x = pos.x;
+//                        point.y = pos.y;
+//                        objectsPointsControl.get(1).createCurve();
+//                        objectsPointsControl.get(1).drawLineForCurve();
+//                        return;
+//                    }
+//                }
+//                objectsPointsControl.get(0).addVertices(new Vector3f(pos.x, pos.y, 0));
+//                objectsPointsControl.get(1).addVerticesForCurve(new Vector3f(pos.x, pos.y, 0));
+//                objectsSquare.add(new SquareWithRumusCircle(
+//                        Arrays.asList(
+//                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+//                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+//                        ),
+//                        new ArrayList<>(),
+//                        new Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
+//                        new Vector3f(pos.x, pos.y, 0.0f),
+//                        0.1
+//                ));
             }
         }
     }
@@ -338,6 +385,14 @@ public class Main {
             input();
 
             // code here
+//            for (Object2d object : objects){
+//                object.draw();
+//            }
+
+//            for (Object2d object : objects){
+//                object.drawPolygon();
+//            }
+
 //            for (Object2d object : objects) {
 //                object.drawWithVerticesColor();
 //            }
@@ -358,17 +413,19 @@ public class Main {
 //                object.draw();
 //            }
 
-            for (Object2d object : objectsSquare) {
-                object.draw();
-            }
+//            for (Object2d object : objectsSquare) {
+//                object.draw();
+//            }
 //
 //            for (Object2d object : objectsTriangle) {
 //                object.draw();
 //            }
 
-            for (Object2d object : objectsPointsControl) {
-//                object.drawLine();
-                object.drawLineForCurve();
+//            objectsPointsControl.get(0).drawLine();
+//            objectsPointsControl.get(1).drawLineForCurve();
+
+            for (Object2d object : objectsSphere) {
+                object.drawLine();
             }
 
             // Restore state
