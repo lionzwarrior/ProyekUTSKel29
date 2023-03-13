@@ -1,14 +1,15 @@
 package Engine;
 
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+import org.lwjgl.system.MemoryStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
+import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
@@ -21,8 +22,8 @@ public class Object2d extends ShaderProgram {
     List<Vector3f> verticesColor;
     int vboColor;
     List<Vector3f> curve = new ArrayList<>();
-    float x;
-    float y;
+    public Matrix4f model;
+    public Vector3f currentPosition;
 
     public Object2d(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color) {
         super(shaderModuleDataList);
@@ -31,6 +32,8 @@ public class Object2d extends ShaderProgram {
         this.color = color;
         uniformsMap = new UniformsMap(getProgramId());
         uniformsMap.createUniform("uni_color");
+        uniformsMap.createUniform("model");
+        model = new Matrix4f().scale(1, 1, 1);
     }
 
     public Object2d(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, List<Vector3f> verticesColor) {
@@ -73,6 +76,7 @@ public class Object2d extends ShaderProgram {
     public void drawSetup() {
         bind();
         uniformsMap.setUniform("uni_color", color);
+        uniformsMap.setUniform("model", model);
         // bind VBO
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -204,5 +208,17 @@ public class Object2d extends ShaderProgram {
             result *= i;
         }
         return result;
+    }
+
+    public void translate(float x, float y, float z){
+        model = (new Matrix4f().translate(x, y, z)).mul(model);
+    }
+
+    public void rotate(float angle, float x, float y, float z){
+        model = new Matrix4f().rotate(angle, x, y, z).mul(new Matrix4f(model));
+    }
+
+    public void scale(float x, float y, float z){
+        model = model.mul(new Matrix4f().scale(x, y, z));
     }
 }

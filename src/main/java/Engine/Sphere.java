@@ -12,7 +12,7 @@ import static org.lwjgl.opengl.GL15.glBindBuffer;
 
 public class Sphere extends Eclipse{
     Float radiusZ;
-    Vector3f centerpoint;
+    public Vector3f centerpoint;
     double height;
     double width;
 
@@ -22,7 +22,7 @@ public class Sphere extends Eclipse{
         this.centerpoint = centerpoint;
         this.height = height;
         this.width = width;
-        createHyperboloid2();
+        createEllipsoid();
         setupVAOVBO();
     }
 

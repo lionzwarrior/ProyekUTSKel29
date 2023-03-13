@@ -1,10 +1,9 @@
 import Engine.*;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
+import org.joml.*;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
+import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -313,16 +312,124 @@ public class Main {
                         new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
                 ),
                 new ArrayList<>(),
+                new Vector4f(1.0f, 1.0f, 0.0f, 1.0f),
+                new Vector3f(0.0f, 0.0f, 0.0f),
+                0.1, 0.1, 0.1f
+        ));
+        objectsSphere.get(0).scale(0.5f, 0.5f, 0.5f);
+
+        objectsSphere.add(new Sphere(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
+                new Vector4f(0.5f, 0.35f, 0.05f, 1.0f),
+                new Vector3f(0.0f, 0.0f, 0.0f),
+                0.1, 0.1, 0.1f
+        ));
+        objectsSphere.get(1).scale(0.1f, 0.1f, 0.1f);
+        objectsSphere.get(1).translate(0.25f, 0.25f, 0.25f);
+
+        objectsSphere.add(new Sphere(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
+                new Vector4f(0.0f, 1.0f, 0.0f, 1.0f),
+                new Vector3f(0.0f, 0.0f, 0.0f),
+                0.1, 0.1, 0.1f
+        ));
+        objectsSphere.get(2).scale(0.13f, 0.13f, 0.13f);
+        objectsSphere.get(2).translate(0.35f, 0.35f, 0.35f);
+
+        objectsSphere.add(new Sphere(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
                 new Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector3f(0.0f, 0.0f, 0.0f),
-                0.5, 0.5, 0.5f
+                0.1, 0.1, 0.1f
         ));
+        objectsSphere.get(3).scale(0.16f, 0.16f, 0.16f);
+        objectsSphere.get(3).translate(0.48f, 0.48f, 0.48f);
+
+        objectsSphere.add(new Sphere(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
+                new Vector4f(0.0f, 0.0f, 1.0f, 1.0f),
+                new Vector3f(0.0f, 0.0f, 0.0f),
+                0.1, 0.1, 0.1f
+        ));
+        objectsSphere.get(4).scale(0.16f, 0.16f, 0.16f);
+        objectsSphere.get(4).translate(0.7f, 0.7f, 0.7f);
+
+        objectsSphere.add(new Sphere(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
+                new Vector4f(1.0f, 1.0f, 1.0f, 1.0f),
+                new Vector3f(0.0f, 0.0f, 0.0f),
+                0.1, 0.1, 0.1f
+        ));
+        objectsSphere.get(5).scale(0.05f, 0.05f, 0.05f);
+        objectsSphere.get(5).translate(0.8f, 0.8f, 0.8f);
+
+        objectsSphere.get(1).currentPosition = objectsSphere.get(1).model.transformPosition(new Vector3f(0f, 0f, 0f));
+        objectsSphere.get(2).currentPosition = objectsSphere.get(2).model.transformPosition(new Vector3f(0f, 0f, 0f));
+        objectsSphere.get(3).currentPosition = objectsSphere.get(3).model.transformPosition(new Vector3f(0f, 0f, 0f));
+        objectsSphere.get(4).currentPosition = objectsSphere.get(4).model.transformPosition(new Vector3f(0f, 0f, 0f));
+        objectsSphere.get(5).currentPosition = objectsSphere.get(5).model.transformPosition(new Vector3f(0f, 0f, 0f));
     }
 
     public void input() {
-        if (window.isKeyPressed(GLFW_KEY_W)) {
-            System.out.println("W");
+        if (window.isKeyPressed(GLFW_KEY_F)) {
+            objectsSphere.get(1).rotate((float)Math.toRadians(1), 0, 0, 1);
+            objectsSphere.get(1).currentPosition = objectsSphere.get(1).model.transformPosition(new Vector3f(0f, 0f, 0f));
+            objectsSphere.get(2).rotate((float)Math.toRadians(1), 0, 0, 1);
+            objectsSphere.get(2).currentPosition = objectsSphere.get(2).model.transformPosition(new Vector3f(0f, 0f, 0f));
+            objectsSphere.get(3).rotate((float)Math.toRadians(1), 0, 0, 1);
+            objectsSphere.get(3).currentPosition = objectsSphere.get(3).model.transformPosition(new Vector3f(0f, 0f, 0f));
+            objectsSphere.get(4).rotate((float)Math.toRadians(1), 0, 0, 1);
+            objectsSphere.get(4).currentPosition = objectsSphere.get(4).model.transformPosition(new Vector3f(0f, 0f, 0f));
+            objectsSphere.get(5).rotate((float)Math.toRadians(1), 0, 0, 1);
+            objectsSphere.get(5).currentPosition = objectsSphere.get(5).model.transformPosition(new Vector3f(0f, 0f, 0f));
         }
+
+        if (window.isKeyPressed(GLFW_KEY_G)) {
+            objectsSphere.get(0).rotate((float)Math.toRadians(1), 0, 0, 1);
+            objectsSphere.get(1).translate(-objectsSphere.get(1).currentPosition.x, -objectsSphere.get(1).currentPosition.y, -objectsSphere.get(1).currentPosition.z);
+            objectsSphere.get(1).rotate((float)Math.toRadians(1), 0, 0, 1);
+            objectsSphere.get(1).translate(objectsSphere.get(1).currentPosition.x, objectsSphere.get(1).currentPosition.y, objectsSphere.get(1).currentPosition.z);
+            objectsSphere.get(2).translate(-objectsSphere.get(2).currentPosition.x, -objectsSphere.get(2).currentPosition.y, -objectsSphere.get(2).currentPosition.z);
+            objectsSphere.get(2).rotate((float)Math.toRadians(1), 0, 0, 1);
+            objectsSphere.get(2).translate(objectsSphere.get(2).currentPosition.x, objectsSphere.get(2).currentPosition.y, objectsSphere.get(2).currentPosition.z);
+            objectsSphere.get(3).translate(-objectsSphere.get(3).currentPosition.x, -objectsSphere.get(3).currentPosition.y, -objectsSphere.get(3).currentPosition.z);
+            objectsSphere.get(3).rotate((float)Math.toRadians(1), 0, 0, 1);
+            objectsSphere.get(3).translate(objectsSphere.get(3).currentPosition.x, objectsSphere.get(3).currentPosition.y, objectsSphere.get(3).currentPosition.z);
+            objectsSphere.get(4).translate(-objectsSphere.get(4).currentPosition.x, -objectsSphere.get(4).currentPosition.y, -objectsSphere.get(4).currentPosition.z);
+            objectsSphere.get(4).rotate((float)Math.toRadians(1), 0, 0, 1);
+            objectsSphere.get(4).translate(objectsSphere.get(4).currentPosition.x, objectsSphere.get(4).currentPosition.y, objectsSphere.get(4).currentPosition.z);
+            objectsSphere.get(5).translate(-objectsSphere.get(5).currentPosition.x, -objectsSphere.get(5).currentPosition.y, -objectsSphere.get(5).currentPosition.z);
+            objectsSphere.get(5).rotate((float)Math.toRadians(1), 0, 0, 1);
+            objectsSphere.get(5).translate(objectsSphere.get(5).currentPosition.x, objectsSphere.get(5).currentPosition.y, objectsSphere.get(5).currentPosition.z);
+        }
+
+        if (window.isKeyPressed(GLFW_KEY_H)) {
+            objectsSphere.get(5).translate(-objectsSphere.get(4).currentPosition.x, -objectsSphere.get(4).currentPosition.y, -objectsSphere.get(4).currentPosition.z);
+            objectsSphere.get(5).rotate((float)Math.toRadians(1), 0, 0, 1);
+            objectsSphere.get(5).translate(objectsSphere.get(4).currentPosition.x, objectsSphere.get(4).currentPosition.y, objectsSphere.get(4).currentPosition.z);
+            objectsSphere.get(5).currentPosition = objectsSphere.get(5).model.transformPosition(new Vector3f(0f, 0f, 0f));
+        }
+
         if (window.getMouseInput().isLeftButtonPressed()) {
             Vector2f pos = window.getMouseInput().getCurrentPos();
 //            System.out.println("x : "+pos.x+" y : "+pos.y);

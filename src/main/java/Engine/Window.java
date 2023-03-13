@@ -109,6 +109,7 @@ public class Window {
 
         glfwSwapBuffers(window); // swap the color buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+        glEnable(GL_DEPTH_TEST);
         glViewport(0, 0, width, height);
 
         if (glfwWindowShouldClose(window))

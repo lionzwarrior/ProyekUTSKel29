@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8456157f-c6e1-44d6-9935-5d171a964ab7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Engine/Sphere.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Engine/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Engine/Circle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/shaders/scene.vert" beforeDir="false" afterPath="$PROJECT_DIR$/resources/shaders/scene.vert" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Engine/Object2d.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Engine/Object2d.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Engine/Sphere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Engine/Sphere.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Engine/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Engine/Window.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -55,6 +56,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Raphael\Universitas Kristen Petra\Mata Kuliah\Semester 4\Grafika Komputer\Grafkom2233\Grafkom2233\resources\shaders" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Engine" />
     </key>
   </component>
   <component name="RunManager">
