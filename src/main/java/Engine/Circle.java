@@ -6,9 +6,6 @@ import org.joml.Vector4f;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 
 public class Circle extends Object2d{
     Vector3f centerpoint;

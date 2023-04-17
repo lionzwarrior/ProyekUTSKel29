@@ -6,10 +6,6 @@ import org.joml.Vector4f;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.glBindBuffer;
-
 public class Sphere extends Eclipse{
     Float radiusZ;
     public Vector3f centerpoint;
@@ -22,8 +18,8 @@ public class Sphere extends Eclipse{
         this.centerpoint = centerpoint;
         this.height = height;
         this.width = width;
-        createEllipsoid();
-        setupVAOVBO();
+        this.createEllipsoid();
+        this.setupVAOVBO();
     }
 
     public void createBox(){

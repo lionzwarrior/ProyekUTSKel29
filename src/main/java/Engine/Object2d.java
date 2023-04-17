@@ -3,7 +3,6 @@ package Engine;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
-import org.lwjgl.system.MemoryStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +23,21 @@ public class Object2d extends ShaderProgram {
     List<Vector3f> curve = new ArrayList<>();
     public Matrix4f model;
     public Vector3f currentPosition;
+    private List<Object2d> childObject;
+
+    public Vector3f updateCenterPoint(){
+        Vector3f centerTemp = new Vector3f();
+        model.transformPosition(0f, 0f, 0f, centerTemp);
+        return centerTemp;
+    }
+
+    public List<Object2d> getChildObject() {
+        return childObject;
+    }
+
+    public void setChildObject(List<Object2d> childObject) {
+        this.childObject = childObject;
+    }
 
     public Object2d(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color) {
         super(shaderModuleDataList);
@@ -33,7 +47,10 @@ public class Object2d extends ShaderProgram {
         uniformsMap = new UniformsMap(getProgramId());
         uniformsMap.createUniform("uni_color");
         uniformsMap.createUniform("model");
+        uniformsMap.createUniform("view");
+        uniformsMap.createUniform("projection");
         model = new Matrix4f().scale(1, 1, 1);
+        childObject = new ArrayList<>();
     }
 
     public Object2d(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, List<Vector3f> verticesColor) {
@@ -83,6 +100,18 @@ public class Object2d extends ShaderProgram {
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
     }
 
+    public void drawSetup(Camera camera, Projection projection) {
+        bind();
+        uniformsMap.setUniform("uni_color", color);
+        uniformsMap.setUniform("model", model);
+        uniformsMap.setUniform("view", camera.getViewMatrix());
+        uniformsMap.setUniform("projection", projection.getProjMatrix());
+        // bind VBO
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+    }
+
     public void drawSetupWithVerticesColor() {
         bind();
         // bind VBO
@@ -109,6 +138,20 @@ public class Object2d extends ShaderProgram {
         glDrawArrays(GL_TRIANGLES, 0, vertices.size());
     }
 
+    public void draw(Camera camera, Projection projection) {
+        drawSetup(camera, projection);
+        // Draw the vertices
+        glLineWidth(0);
+        glPointSize(0);
+        // GL_TRIANGLES
+        // GL_LINE_LOOP
+        // GL_LINE_STRIP
+        // GL_LINES
+        // GL_POINTS
+        // GL_TRIANGLE_FAN
+        glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
+    }
+
     public void drawPolygon() {
         drawSetup();
         // Draw the vertices
@@ -130,6 +173,13 @@ public class Object2d extends ShaderProgram {
         glPointSize(0);
         glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
     }
+    public void drawLine(Camera camera, Projection projection) {
+        drawSetup(camera, projection);
+        // Draw the vertices
+        glLineWidth(1);
+        glPointSize(0);
+        glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
+    }
 
     public void drawLineForCurve() {
         drawSetup();
@@ -137,6 +187,40 @@ public class Object2d extends ShaderProgram {
         glLineWidth(1);
         glPointSize(0);
         glDrawArrays(GL_LINE_STRIP, 0, curve.size());
+    }
+
+    public void drawWithChild() {
+        drawSetup();
+        // Draw the vertices
+        glLineWidth(0);
+        glPointSize(0);
+        // GL_TRIANGLES
+        // GL_LINE_LOOP
+        // GL_LINE_STRIP
+        // GL_LINES
+        // GL_POINTS
+        // GL_TRIANGLE_FAN
+        glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
+        for(Object2d child: childObject){
+            child.drawLine();
+        }
+    }
+
+    public void drawWithChild(Camera camera, Projection projection) {
+        drawSetup(camera, projection);
+        // Draw the vertices
+        glLineWidth(0);
+        glPointSize(0);
+        // GL_TRIANGLES
+        // GL_LINE_LOOP
+        // GL_LINE_STRIP
+        // GL_LINES
+        // GL_POINTS
+        // GL_TRIANGLE_FAN
+        glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
+        for(Object2d child: childObject){
+            child.drawLine(camera, projection);
+        }
     }
 
     public void addVertices(Vector3f newVector) {
@@ -214,11 +298,64 @@ public class Object2d extends ShaderProgram {
         model = (new Matrix4f().translate(x, y, z)).mul(model);
     }
 
+    public void translateWithChild(float x, float y, float z){
+        model = (new Matrix4f().translate(x, y, z)).mul(model);
+        for(Object2d child: childObject){
+            child.translate(x, y, z);
+        }
+    }
+
     public void rotate(float angle, float x, float y, float z){
         model = new Matrix4f().rotate(angle, x, y, z).mul(new Matrix4f(model));
     }
 
+    public void rotateWithChild(float angle, float x, float y, float z){
+        model = new Matrix4f().rotate(angle, x, y, z).mul(new Matrix4f(model));
+        for(Object2d child: childObject){
+            child.rotate(angle, x, y, z);
+        }
+    }
+
     public void scale(float x, float y, float z){
         model = model.mul(new Matrix4f().scale(x, y, z));
+    }
+
+    public void scaleWithChild(float x, float y, float z){
+        model = model.mul(new Matrix4f().scale(x, y, z));
+        for(Object2d child: childObject){
+            child.scale(x, y, z);
+        }
+    }
+
+    public void createEllipsoid(){
+        vertices.clear();
+        ArrayList<Vector3f> temp = new ArrayList<>();
+
+        for(double v = -Math.PI/2; v<= Math.PI/2; v+=Math.PI/60){
+            for(double u = -Math.PI; u<= Math.PI; u+=Math.PI/60){
+                float x = 0.5f * (float)(Math.cos(v) * Math.cos(u));
+                float y = 0.5f * (float)(Math.cos(v) * Math.sin(u));
+                float z = 0.5f * (float)(Math.sin(v));
+                temp.add(new Vector3f(x,y,z));
+            }
+        }
+        vertices = temp;
+    }
+
+    // to make minion
+    public void createCylinder(){
+        vertices.clear();
+        ArrayList<Vector3f> temp = new ArrayList<>();
+
+        for(float i = 0.0f; i <= 1f; i+= 0.01f) {
+            for (double v = 0; v <= Math.PI*2; v += Math.PI / 60) {
+                for (double u = 0; u <= Math.PI*2; u += Math.PI / 60) {
+                    float x = 0.3f * (float) (Math.cos(v));
+                    float y = 0.3f * (float) (Math.sin(v));
+                    temp.add(new Vector3f(x, y, i));
+                }
+            }
+        }
+        vertices = temp;
     }
 }
