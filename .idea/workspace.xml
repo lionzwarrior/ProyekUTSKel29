@@ -4,20 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8456157f-c6e1-44d6-9935-5d171a964ab7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Engine/Camera.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Engine/ObjectProject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Engine/Projection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MainProject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MainProjectOld.java" afterDir="false" />
+    <list default="true" id="8456157f-c6e1-44d6-9935-5d171a964ab7" name="Changes" comment="Final for UTS Project">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/shaders/scene.vert" beforeDir="false" afterPath="$PROJECT_DIR$/resources/shaders/scene.vert" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Engine/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Engine/Circle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Engine/MouseInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Engine/MouseInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Engine/Object2d.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Engine/Object2d.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Engine/Sphere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Engine/Sphere.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,6 +115,14 @@
       <option name="presentableId" value="Default" />
       <updated>1676271494305</updated>
     </task>
+    <task id="LOCAL-00001" summary="Final for UTS Project">
+      <created>1681724031909</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1681724031910</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -142,5 +138,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Final for UTS Project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final for UTS Project" />
   </component>
 </project>
