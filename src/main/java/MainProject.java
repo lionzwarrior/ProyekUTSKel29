@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class MainProject {
     // note from author: left right from the camera perspective
-    private final Window window = new Window(1080, 1080, "Kevin The Minion");
+    private final Window window = new Window(1080, 1080, "Minions");
     ArrayList<ObjectProject> objects = new ArrayList<>();
     private ArrayList<ObjectF> ObjectFs = new ArrayList<>();
 
@@ -1405,7 +1405,6 @@ public class MainProject {
         }
 
         if (window.isKeyPressed(GLFW_KEY_2)) {
-            System.out.println(countDegree2);
             if (ground) {
                 ObjectFs.get(0).translateObjectF(0.0f, 0.01f, 0.0f);
                 countDegree2 += 2;
