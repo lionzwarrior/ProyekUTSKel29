@@ -75,7 +75,7 @@ public class MainProject {
                         new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
                 ),
                 new ArrayList<>(),
-                    new Vector4f(0.039f, 0.457f, 0.734f, 1.0f),
+                new Vector4f(0.039f, 0.457f, 0.734f, 1.0f),
                 new Vector3f(0.0f, 0.0f, 0.0f),
                 0.3f, 0.2f, 0.3f
         ));
@@ -568,8 +568,6 @@ public class MainProject {
         objects.get(0).getChildObject().get(21).rotate(-(float) Math.PI / 2, 0, 1, 0);
         objects.get(0).getChildObject().get(21).setThickness(7f);
 
-        objects.get(0).translateWithChild(-1f, 0, 0);
-
         // tabung kuning (body)
         ObjectFs.add(new TubeF(
                 Arrays.asList(
@@ -802,8 +800,6 @@ public class MainProject {
                 0.07f
         ));
 
-        ObjectFs.get(0).translateObjectF(1f, 0f, 0f);
-
         //BADAN
         objectsJ.add(new SphereJ(
                 Arrays.asList(
@@ -820,7 +816,7 @@ public class MainProject {
                 100,
                 1
         ));
-        objectsJ.get(0).translate(0.0f, 0.0f, 0.0f);
+
         objectsJ.get(0).scale(1.0f, 0.9f, 1.0f);
 
 //
@@ -1237,6 +1233,23 @@ public class MainProject {
         ));
         objectsJ.get(0).getChildObject().get(20).scale(0.25f, 0.15f, 0.4f);
         objectsJ.get(0).getChildObject().get(20).translate(0.05f, -0.18f, 0.02f);
+
+        objects.add(new ObjectProject(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
+                new Vector4f(0.3373f, 0.4902f, 0.2745f, 1.0f),
+                new Vector3f(0.0f, 0.0f, 0.0f),
+                3f, 0.3f, 3f
+        ));
+        objects.get(1).createCylinder();
+        objects.get(1).translate(0, -1f, 0);
+
+        objects.get(0).translateWithChild(-0.7f, -0.3f, 0);
+        objectsJ.get(0).translate(0, -0.8f, 0f);
+        ObjectFs.get(0).translateObjectF(0.7f, -0.9f, 0f);
     }
 
     boolean switching = true;
@@ -1287,22 +1300,22 @@ public class MainProject {
             running4 = true;
         }
         if (window.isKeyPressed(GLFW_KEY_W)) {
-            camera.moveForward(0.01f);
+            camera.moveForward(0.005f);
         }
         if (window.isKeyPressed(GLFW_KEY_S)) {
-            camera.moveBackwards(0.01f);
+            camera.moveBackwards(0.005f);
         }
         if (window.isKeyPressed(GLFW_KEY_A)) {
-            camera.moveLeft(0.01f);
+            camera.moveLeft(0.005f);
         }
         if (window.isKeyPressed(GLFW_KEY_D)) {
-            camera.moveRight(0.01f);
+            camera.moveRight(0.005f);
         }
         if (window.isKeyPressed(GLFW_KEY_SPACE)) {
-            camera.moveUp(0.01f);
+            camera.moveUp(0.005f);
         }
         if (window.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
-            camera.moveDown(0.01f);
+            camera.moveDown(0.005f);
         }
         if (window.isKeyPressed(GLFW_KEY_UP)) {
             camera.addRotation(-0.01f, 0f);
@@ -1420,55 +1433,54 @@ public class MainProject {
             }
         }
 
-    //MELAMBAI
-    if(window.isKeyPressed(GLFW_KEY_3)) {
+        //MELAMBAI
+        if (window.isKeyPressed(GLFW_KEY_3)) {
 
-        if (switchingJ == true) {
-            ObjectJerry temp = objectsJ.get(0);
-            temp.currentPosition = temp.updateCenterPointj();
-            objectsJ.get(0).getChildObject().get(16).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(17).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(15).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(18).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(16).rotate((float) Math.toRadians(-5.0f), 0, 0, 1.0f);
-            objectsJ.get(0).getChildObject().get(17).rotate((float) Math.toRadians(-5.0f), 0, 0, 1.0f);
-            objectsJ.get(0).getChildObject().get(15).rotate((float) Math.toRadians(5.0f), 0, 0, 1.0f);
-            objectsJ.get(0).getChildObject().get(18).rotate((float) Math.toRadians(5.0f), 0, 0, 1.0f);
-            objectsJ.get(0).getChildObject().get(16).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(17).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(15).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(18).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
-            countDegreeJ += 2;
-            if (countDegreeJ >= 20) {
-                switchingJ = false;
+            if (switchingJ == true) {
+                ObjectJerry temp = objectsJ.get(0);
+                temp.currentPosition = temp.updateCenterPointj();
+                objectsJ.get(0).getChildObject().get(16).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(17).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(15).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(18).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(16).rotate((float) Math.toRadians(-5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(17).rotate((float) Math.toRadians(-5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(15).rotate((float) Math.toRadians(5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(18).rotate((float) Math.toRadians(5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(16).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(17).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(15).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(18).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
+                countDegreeJ += 2;
+                if (countDegreeJ >= 20) {
+                    switchingJ = false;
+                }
+            }
+            if (switchingJ != true) {
+                ObjectJerry temp = objectsJ.get(0);
+                temp.currentPosition = temp.updateCenterPointj();
+                objectsJ.get(0).getChildObject().get(16).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(17).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(15).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(18).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(16).rotate((float) Math.toRadians(5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(17).rotate((float) Math.toRadians(5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(15).rotate((float) Math.toRadians(-5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(18).rotate((float) Math.toRadians(-5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(16).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(17).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(15).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
+                objectsJ.get(0).getChildObject().get(18).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
+                countDegreeJ -= 2;
+                if (countDegreeJ <= -10) {
+                    switchingJ = true;
+                }
             }
         }
-        if (switchingJ != true) {
-            ObjectJerry temp = objectsJ.get(0);
-            temp.currentPosition = temp.updateCenterPointj();
-            objectsJ.get(0).getChildObject().get(16).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(17).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(15).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(18).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(16).rotate((float) Math.toRadians(5.0f), 0, 0, 1.0f);
-            objectsJ.get(0).getChildObject().get(17).rotate((float) Math.toRadians(5.0f), 0, 0, 1.0f);
-            objectsJ.get(0).getChildObject().get(15).rotate((float) Math.toRadians(-5.0f), 0, 0, 1.0f);
-            objectsJ.get(0).getChildObject().get(18).rotate((float) Math.toRadians(-5.0f), 0, 0, 1.0f);
-            objectsJ.get(0).getChildObject().get(16).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(17).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(15).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
-            objectsJ.get(0).getChildObject().get(18).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
-            countDegreeJ -= 2;
-            if (countDegreeJ <= -10) {
-                switchingJ = true;
-            }
-        }
-    }
-
 
 
         //LARI
-        if(window.isKeyPressed(GLFW_KEY_4)){
+        if (window.isKeyPressed(GLFW_KEY_4)) {
             if (switchingJ == true) {
                 ObjectJerry temp = objectsJ.get(0);
                 temp.currentPosition = temp.updateCenterPointj();
@@ -1480,12 +1492,12 @@ public class MainProject {
                 objectsJ.get(0).getChildObject().get(18).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
                 objectsJ.get(0).getChildObject().get(19).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
                 objectsJ.get(0).getChildObject().get(20).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
-                objectsJ.get(0).getChildObject().get(6).rotate((float)Math.toRadians(1.0f),0f,1.0f,0f );
-                objectsJ.get(0).getChildObject().get(7).rotate((float)Math.toRadians(1.0f),0f,1.0f,0f);
-                objectsJ.get(0).getChildObject().get(16).rotate((float)Math.toRadians(-5.0f),0,0,1.0f );
-                objectsJ.get(0).getChildObject().get(17).rotate((float)Math.toRadians(-5.0f),0,0,1.0f );
-                objectsJ.get(0).getChildObject().get(15).rotate((float)Math.toRadians(5.0f),0,0,1.0f );
-                objectsJ.get(0).getChildObject().get(18).rotate((float)Math.toRadians(5.0f),0,0,1.0f );
+                objectsJ.get(0).getChildObject().get(6).rotate((float) Math.toRadians(1.0f), 0f, 1.0f, 0f);
+                objectsJ.get(0).getChildObject().get(7).rotate((float) Math.toRadians(1.0f), 0f, 1.0f, 0f);
+                objectsJ.get(0).getChildObject().get(16).rotate((float) Math.toRadians(-5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(17).rotate((float) Math.toRadians(-5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(15).rotate((float) Math.toRadians(5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(18).rotate((float) Math.toRadians(5.0f), 0, 0, 1.0f);
                 objectsJ.get(0).getChildObject().get(19).rotate((float) Math.toRadians(-3f), 1.0f, 0, 0);
                 objectsJ.get(0).getChildObject().get(20).rotate((float) Math.toRadians(3f), 1.0f, 0, 0);
                 objectsJ.get(0).getChildObject().get(6).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
@@ -1497,9 +1509,11 @@ public class MainProject {
                 objectsJ.get(0).getChildObject().get(19).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
                 objectsJ.get(0).getChildObject().get(20).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
                 countDegreeJ += 2;
-                if(countDegreeJ >= 20){ switchingJ = false;}
+                if (countDegreeJ >= 20) {
+                    switchingJ = false;
+                }
             }
-            if(switchingJ == false){
+            if (switchingJ == false) {
                 ObjectJerry temp = objectsJ.get(0);
                 temp.currentPosition = temp.updateCenterPointj();
                 objectsJ.get(0).getChildObject().get(6).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
@@ -1510,12 +1524,12 @@ public class MainProject {
                 objectsJ.get(0).getChildObject().get(18).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
                 objectsJ.get(0).getChildObject().get(19).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
                 objectsJ.get(0).getChildObject().get(20).translate(-temp.currentPosition.x, -temp.currentPosition.y, -temp.currentPosition.z);
-                objectsJ.get(0).getChildObject().get(6).rotate((float)Math.toRadians(-1.0f),0f,1.0f,0f );
-                objectsJ.get(0).getChildObject().get(7).rotate((float)Math.toRadians(-1.0f),0f,1.0f,0f);
-                objectsJ.get(0).getChildObject().get(16).rotate((float)Math.toRadians(5.0f),0,0,1.0f );
-                objectsJ.get(0).getChildObject().get(17).rotate((float)Math.toRadians(5.0f),0,0,1.0f );
-                objectsJ.get(0).getChildObject().get(15).rotate((float)Math.toRadians(-5.0f),0,0,1.0f );
-                objectsJ.get(0).getChildObject().get(18).rotate((float)Math.toRadians(-5.0f),0,0,1.0f );
+                objectsJ.get(0).getChildObject().get(6).rotate((float) Math.toRadians(-1.0f), 0f, 1.0f, 0f);
+                objectsJ.get(0).getChildObject().get(7).rotate((float) Math.toRadians(-1.0f), 0f, 1.0f, 0f);
+                objectsJ.get(0).getChildObject().get(16).rotate((float) Math.toRadians(5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(17).rotate((float) Math.toRadians(5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(15).rotate((float) Math.toRadians(-5.0f), 0, 0, 1.0f);
+                objectsJ.get(0).getChildObject().get(18).rotate((float) Math.toRadians(-5.0f), 0, 0, 1.0f);
                 objectsJ.get(0).getChildObject().get(19).rotate((float) Math.toRadians(3f), 1.0f, 0, 0);
                 objectsJ.get(0).getChildObject().get(20).rotate((float) Math.toRadians(-3f), 1.0f, 0, 0);
                 objectsJ.get(0).getChildObject().get(6).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
@@ -1527,7 +1541,9 @@ public class MainProject {
                 objectsJ.get(0).getChildObject().get(19).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
                 objectsJ.get(0).getChildObject().get(20).translate(temp.currentPosition.x, temp.currentPosition.y, temp.currentPosition.z);
                 countDegreeJ -= 2;
-                if(countDegreeJ <= -10){ switchingJ = true;}
+                if (countDegreeJ <= -10) {
+                    switchingJ = true;
+                }
             }
         }
 
@@ -1580,7 +1596,7 @@ public class MainProject {
     public void loop() {
         while (window.isOpen()) {
             window.update();
-            glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
+            glClearColor(0.529f, 0.808f, 0.929f, 1f);
             GL.createCapabilities();
 
             input();
@@ -1589,11 +1605,11 @@ public class MainProject {
             for (ObjectProject object : objects) {
                 object.drawWithChild(camera, projection);
             }
-            for(ObjectF ObjectF: ObjectFs){
-                ObjectF.draw(camera,projection);
+            for (ObjectF ObjectF : ObjectFs) {
+                ObjectF.draw(camera, projection);
             }
-            for(ObjectJerry object: objectsJ){
-                object.draw(camera,projection);
+            for (ObjectJerry object : objectsJ) {
+                object.draw(camera, projection);
             }
 
             // wave animation left
